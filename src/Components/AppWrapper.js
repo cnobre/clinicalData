@@ -72,8 +72,19 @@ export default class AppWrapper extends React.Component {
   render() {
     return (
 
-      <div style={{width: '80%',  margin:'auto'}}>
-          <TableComponent data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs}/>
+      <div style={{width: '80%',  margin:'auto', height:'300px', 'overflow-y':'scroll'}}>
+
+      <div style={{margin:'0px' , display:'inline-block', width:'30%'}}>
+       <Paper style={{margin: '16px 0px 16px 0px'}} zDepth={1}> 
+<TableComponent title={'Tree'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}/>
+        </Paper> 
+      </div>
+      <div style={{margin:'0px' , display:'inline-block', width:'60%'}}>
+          <Paper style={{margin: '16px 0px 16px 0px'}} zDepth={1}> 
+<TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}/>
+        </Paper> 
+     </div>
+      
       </div>
 
 

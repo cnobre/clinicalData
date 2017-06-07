@@ -58,7 +58,7 @@ export default class TableComponent extends React.Component {
      selectedRows:[],
      preScanRows:false,
      data:this.props.data,
-     height: '600px'};
+     height: this.props.height};
    }
 
 
@@ -88,8 +88,8 @@ export default class TableComponent extends React.Component {
       
       selectable={this.state.selectable}
       multiSelectable={this.state.multiSelectable}
-      bodyStyle={{overflow:'scroll'}}
-     style={{tableLayout: 'auto'}} 
+      bodyStyle={{'overflow-x':'scroll', 'overflow-y':'visible'}}
+      style={{tableLayout: 'auto'}} 
       >
       {/*
         
@@ -102,7 +102,7 @@ export default class TableComponent extends React.Component {
       >
       <TableRow>
       <TableHeaderColumn colSpan={Object.keys(tableData[0]).filter((el)=>{return typeof(tableData[0][el])!=='boolean'}).length} style={{textAlign: 'center'}}>
-      Clinical Data
+      {this.props.title}
       </TableHeaderColumn>
       </TableRow>
       </TableHeader>
@@ -136,7 +136,7 @@ export default class TableComponent extends React.Component {
         if(typeof(tableData[0][key]) !== "boolean"){
         return (
          <TableHeaderColumn  key={key} style={{paddingRight:'10px', width:'50px', paddingLeft:'10px'}}>
-              <RenderColSummary dataVector={tableData} field={key} refs={this.props.refs}/></TableHeaderColumn>
+              <RenderColSummary dataVector={tableData} field={key}/></TableHeaderColumn>
           )
         }
         })}
@@ -173,5 +173,7 @@ export default class TableComponent extends React.Component {
 
 // Specifies the default values for props:
 TableComponent.defaultProps = {
-  refs:null
+  refs:null,
+  title:'Table Title',
+  height:'600px'
 };

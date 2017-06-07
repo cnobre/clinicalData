@@ -29,17 +29,11 @@ export default class RenderColSummary extends React.Component {
     .value((d)=>{ return d[this.props.field]})
     .domain(sizeScale.domain())
     .thresholds(10)
-    {/*.thresholds(sizeScale.ticks(5))*/}
 
     var minCount = d3.min(histogram(this.props.dataVector).map((bin)=>{return bin.length}));
     var maxCount = d3.max(histogram(this.props.dataVector).map((bin)=>{return bin.length}));
 
     var histScale = d3.scaleLinear().range([0,40]).domain([minCount,maxCount]);
-
-  
-    {/*console.log(refRange)
-    console.log(this.props.field, minCount,maxCount)
-    histogram(this.props.dataVector).map((bin)=>{console.log(bin.x0,bin.length)})*/}
     
     this.setState({scale:sizeScale, range:refRange, histogram:histogram, histScale:histScale});
   }
@@ -52,10 +46,10 @@ export default class RenderColSummary extends React.Component {
     return (
       <svg width={100} height={50} style={{display:'block', margin:'auto'}}>
         {hist.map((bin,i)=>{
-       return (<rect key={this.props.field + i} x={this.state.scale(bin.x0)} y={40 - this.state.histScale(bin.length)} width ={6} height={this.state.histScale(bin.length)} fill= {this.state.range && bin.x0>this.state.range[1] ? "indianred" : '#666666'} opacity='1'/>)
+       return (<rect key={this.props.field + i} x={this.state.scale(bin.x0)} y={40 - this.state.histScale(bin.length)} width={6} height={this.state.histScale(bin.length)} fill={this.state.range && bin.x0>this.state.range[1] ? "indianred" : '#666666'} opacity='1'/>)
     })}
 
-        <rect x={0} y={40} width ={100} height={2} fill='#cecece' opacity='1'/>
+        <rect x={0} y={40} width={100} height={2} fill='#cecece' opacity='1'/>
       </svg>
     )
   }

@@ -41,12 +41,12 @@ export default class RenderQuantCell extends React.Component {
 
        {/*<text x={0} y={25} fill='#8b8d8e'>{this.props.data}</text>*/}
       	<rect width={100} height={height} fill='#f4f4f4'/>
-        <rect x={this.state.range ? this.state.scale(this.state.range[1]) : 0 } width ={this.state.range && this.props.data>this.state.range[1] ? this.state.scale.domain()[1]-this.state.scale(this.state.range[1]) : 0} height={height}  fill={highColor} opacity='.1'/>
-        <rect x={0} width ={this.state.range && this.props.data<this.state.range[0] ? this.state.scale(this.state.range[0]) : 0} height={height}  fill={lowColor} opacity='.1'/>
+        <rect x={this.state.range ? this.state.scale(this.state.range[1]) : 0 } width={this.state.range && this.props.data>this.state.range[1] ? this.state.scale.domain()[1]-this.state.scale(this.state.range[1]) : 0} height={height}  fill={highColor} opacity='.1'/>
+        <rect x={0} width={this.state.range && this.props.data<this.state.range[0] ? this.state.scale(this.state.range[0]) : 0} height={height}  fill={lowColor} opacity='.1'/>
         {/*<rect x={this.state.range ? this.state.scale(this.state.range[0]) : 0 } width ={this.state.range ? 2 : 0} height={this.state.height}  fill='#969696' opacity='.5'/>
         <rect x={this.state.range ? this.state.scale(this.state.range[1]) : 0 } width ={this.state.range ? 2 : 0} height={this.state.height}  fill='#969696' opacity='.5'/>*/}
-        <rect x={this.state.range ? this.state.scale(this.state.range[0]) : 0 } width ={this.state.range? this.state.scale(this.state.range[1])-this.state.scale(this.state.range[0]) : 0} height={height}  fill='#969696' opacity='.2'/>
-     	<circle cy={height/2} cx={this.props.data !== 'NA' ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? 5 : 0}  fill= {this.state.range ? (this.props.data>this.state.range[1] ? highColor : (this.props.data<this.state.range[0] ? lowColor : '#8b8d8e')) : '#8b8d8e'}/>
+        <rect x={this.state.range ? this.state.scale(this.state.range[0]) : 0 } width={this.state.range? this.state.scale(this.state.range[1])-this.state.scale(this.state.range[0]) : 0} height={height}  fill='#969696' opacity='.2'/>
+     	<circle cy={height/2} cx={this.props.data !== 'NA' ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? 5 : 0}  fill={this.state.range ? (this.props.data>this.state.range[1] ? highColor : (this.props.data<this.state.range[0] ? lowColor : '#8b8d8e')) : '#8b8d8e'}/>
         
       </svg>
     )
@@ -54,6 +54,6 @@ export default class RenderQuantCell extends React.Component {
 }
 
 // Specifies the default values for props:
-RenderQuantCell.defaultProps = {
+RenderQuantCell.defaultProps={
   refs:null
 };
