@@ -5,7 +5,7 @@ import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up';
 import {grey500, blueGrey700} from 'material-ui/styles/colors';
 import SvgIcon from 'material-ui/SvgIcon';
 
-import RenderQuantCell from './RenderQuantCell'
+import RenderTreeRow from './RenderTreeRow'
 import RenderColSummary from './RenderColSummary'
 
 
@@ -37,7 +37,7 @@ const iconStyles = {
   marginRight: -7,
 };
 
-export default class TableComponent extends React.Component {
+export default class TreeTableComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -122,50 +122,40 @@ export default class TableComponent extends React.Component {
         preScanRows={this.state.preScanRows}
         >
         <TableRow style={{'border-bottom':'0px'}}>
-      {Object.keys(tableData[0]).map((key)=> { 
         
         return (
-          <TableHeaderColumn tooltip={key} key={key} style={{height:'25px', width:'50px', padding:'10px', paddingLeft:'10px', textAlign:'center'}}>
-           {key}
-           {/*<span>
-           <br/> <DownIcon style={iconStyles} color={grey500} hoverColor={blueGrey700} onClick={()=>{this.handleSort('down',key)}}/>
-           <UpIcon style={iconStyles} color={grey500} hoverColor={blueGrey700} onClick={()=>{this.handleSort('up',key)}} />
-           </span>*/}
+          <TableHeaderColumn style={{height:'25px', width:'50px', padding:'10px', paddingLeft:'10px', textAlign:'center'}}>
+           'Birth Date'
+           
           </TableHeaderColumn>
           )
-        
-        })}
+
 
 
         </TableRow>
 
          <TableRow>
-      {Object.keys(tableData[0]).map((key)=> { 
+
         return (
-         <TableHeaderColumn  key={key} style={{paddingRight:'10px', width:'50px', paddingLeft:'10px'}}>
-              <RenderColSummary dataVector={tableData} field={key} refs={this.props.refs}/></TableHeaderColumn>
+         <TableHeaderColumn  style={{paddingRight:'10px', width:'100%', paddingLeft:'10px'}}>
+              <RenderColSummary dataVector={tableData} field='bdate' refs={this.props.refs}/></TableHeaderColumn>
           )
-        
-        })}
-
-
-        </TableRow>
+          </TableRow>
 
 
 
         {tableData.map( (row, index) => (
           <TableRow key={index} selected={this.state.selectedRows.indexOf(index) !== -1}>
-          {Object.keys(row).map((key)=> { 
-      
+     
             return (                 
-            <TableRowColumn  key={key} style={{paddingRight:'10px', width:'50px', paddingLeft:'10px'}}>
-              <RenderQuantCell dataVector={tableData} field={key} data={row[key]} refs={this.props.refs}/>
+            <TableRowColumn style={{paddingRight:'10px', width:'100%', paddingLeft:'10px'}}>
+              <RenderTreeRow dataVector={tableData} field='bdate' data={row.bdate} refs={this.props.refs}/>
 
               </TableRowColumn>
           
             )
 
-          })}
+          
 
             </TableRow>
             ))}
@@ -181,7 +171,8 @@ export default class TableComponent extends React.Component {
         }
 
 // Specifies the default values for props:
-TableComponent.defaultProps = {
+
+TreeTableComponent.defaultProps = {
   refs:null,
   title:'Table Title',
   height:'600px'

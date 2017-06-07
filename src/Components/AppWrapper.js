@@ -1,17 +1,25 @@
 import React from 'react';
 import TableComponent from './TableComponent';
+import TreeTableComponent from './TreeTableComponent'
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoCompleteComponent from './AutoCompleteComponent';
 
 import MenuComponent from './MenuComponent'
 
-import tableData from '../Data/smallData.json';
+import tableData from '../Data/TenFamiliesDescendAnon.json';
 
 import DrawerComponent from './DrawerComponent'
 
 
 import refs from '../Data/referenceValues.json'
+
+
+import RadioButtonComponent from './RadioButtonComponent'
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 
 
 
@@ -72,16 +80,18 @@ export default class AppWrapper extends React.Component {
   render() {
     return (
 
-      <div style={{width: '80%',  margin:'auto', height:'300px', 'overflow-y':'scroll'}}>
+      <div style={{width: '90%',  margin:'auto', height:'1000px', 'overflow-y':'scroll'}}>
 
-      <div style={{margin:'0px' , display:'inline-block', width:'30%'}}>
-       <Paper style={{margin: '16px 0px 16px 0px'}} zDepth={1}> 
-<TableComponent title={'Tree'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}/>
+      <div style={{padding:'0px' , display:'inline-block', width:'30%'}}>
+       <Paper style={{margin: '16px 0px 16px 5px'}} zDepth={1}> 
+<TreeTableComponent title={'Tree'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}/>
         </Paper> 
       </div>
-      <div style={{margin:'0px' , display:'inline-block', width:'60%'}}>
-          <Paper style={{margin: '16px 0px 16px 0px'}} zDepth={1}> 
-<TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}/>
+      <div style={{padding:'0px' , display:'inline-block', width:'70%'}}>
+          <Paper style={{margin: '16px 5px 16px 5px'}} zDepth={1}> 
+        <TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}>
+        <RadioButtonComponent/>
+        </TableComponent>
         </Paper> 
      </div>
       
