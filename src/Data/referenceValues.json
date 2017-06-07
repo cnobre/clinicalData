@@ -1,0 +1,12 @@
+{
+   "Creatinine urine (mg/dL)": "[0.5,0.9]",
+   "Albumin (g/dL)": "[2,3.5]",
+   "ALT (U/L)": "[7,41]",
+   "AST (U/L)": "[12,38]",
+   "Alkaline phosphotase (U/L)": "[33,96]",
+   "Blood urea nitrogen (mg/dL)": "[7,20]",
+   "Calcium, total (mg/dL)": "[8.7,10.2]",
+   "Cholesterol, total (mg/dL)": "[0,200]",
+   "Glucose (mg/dL)": "[65,95]",
+   "Iron (ug/dL)": "[41,141]"
+ }
