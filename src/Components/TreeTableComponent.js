@@ -73,8 +73,6 @@ export default class TreeTableComponent extends React.Component {
 
     let tableData = this.props.data 
 
-  {/*.filter((el)=>{return typeof(tableData[0][el])!=='boolean'})*/};
-
     return (
 
       (tableData[0] != null) ? 
@@ -125,12 +123,10 @@ export default class TreeTableComponent extends React.Component {
         
         return (
           <TableHeaderColumn style={{height:'25px', width:'50px', padding:'10px', paddingLeft:'10px', textAlign:'center'}}>
-           'Birth Date'
+           'Clusters'
            
           </TableHeaderColumn>
           )
-
-
 
         </TableRow>
 
@@ -138,7 +134,7 @@ export default class TreeTableComponent extends React.Component {
 
         return (
          <TableHeaderColumn  style={{paddingRight:'10px', width:'100%', paddingLeft:'10px'}}>
-              <RenderColSummary dataVector={tableData} field='bdate' refs={this.props.refs}/></TableHeaderColumn>
+              <RenderColSummary dataVector={tableData} field='RIDAGEYR' refs={this.props.refs}/></TableHeaderColumn>
           )
           </TableRow>
 
@@ -149,7 +145,7 @@ export default class TreeTableComponent extends React.Component {
      
             return (                 
             <TableRowColumn style={{paddingRight:'10px', width:'100%', paddingLeft:'10px'}}>
-              <RenderTreeRow dataVector={tableData} field='bdate' data={row.bdate} refs={this.props.refs}/>
+              <RenderTreeRow dataVector={tableData} field='RIDAGEYR' data={row.RIDAGEYR} refs={this.props.refs}/>
 
               </TableRowColumn>
           

@@ -1,10 +1,9 @@
 import React from 'react';
 import * as d3 from 'd3';
 
- var margin = 10;
+var margin = 10;
 
-export default class RenderTreeRow extends React.Component {
-
+export default class RenderBooleanCell extends React.Component {
 
 	constructor(props) {
     super(props);
@@ -33,23 +32,19 @@ export default class RenderTreeRow extends React.Component {
 
   render() {
 
-
     return (
-      <svg width={this.props.width} height={this.props.height} style={{display:'block', margin:'auto', margin:'auto', 'margin-top':'5px', 'margin-bottom':'5px'}}>
-        
-     	<rect y={this.props.height/2} x={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } width={this.props.data !== 'NA' ? this.props.height/6 : 0}  fill={this.state.range ? (this.props.data>this.state.range[1] ? this.props.highColor : (this.props.data<this.state.range[0] ? this.props.lowColor : '#8b8d8e')) : '#8b8d8e'}/>
-    
-             {/*<text x={0} y={25} fill='#8b8d8e'>{this.props.data}</text>*/}
+     <svg width={this.props.width} height={this.props.height} style={{display:'block', margin:'auto', margin:'auto', 'margin-top':'5px', 'margin-bottom':'5px'}}>
+        <rect x={this.props.width/2-this.props.height/3} width={this.props.height/1.5} height={this.props.height/1.5}  fill='#969696' opacity={(this.props.data === 'Y' || this.props.data === 'true') ? 1 : '.2'}/>
       </svg>
     )
   }
 }
 
 // Specifies the default values for props:
-RenderTreeRow.defaultProps={
+RenderBooleanCell.defaultProps={
   refs:null,
-  highColor:'#bc3a20',
+    highColor:'#bc3a20',
   lowColor:'#3b6799',
   height:30,
-  width:400
+  width:100
 };

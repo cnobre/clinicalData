@@ -7,7 +7,7 @@ import AutoCompleteComponent from './AutoCompleteComponent';
 
 import MenuComponent from './MenuComponent'
 
-import tableData from '../Data/TenFamiliesDescendAnon.json';
+import tableData from '../Data/SampleNhanes.json';
 
 import DrawerComponent from './DrawerComponent'
 
@@ -43,15 +43,23 @@ export default class AppWrapper extends React.Component {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleTableSelection = this.handleTableSelection.bind(this);
+
+    var filtData = tableData.map((el)=>{el.selected = false; return el}).slice(1, 100);
+
+    
+
     this.state = {
       allData:tableData.map((el)=>{el.selected = false; return el}),
-      filteredData: tableData.map((el)=>{el.selected = false; return el}),
+      filteredData: filtData,
       name:'',
       city:'',
       category:'',
-      selectedCompany:null
-    };
+      selectedCompany:null,
+      height:filtData.length * 60 + 100
+    }; 
   }
+
+
 
   handleTableSelection = (selectedCompany) =>{
     this.setState(function (state, props) {
@@ -66,6 +74,13 @@ export default class AppWrapper extends React.Component {
       });
   };
 
+  groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+};
+
   handleChange = (value,field) => {
     this.setState(function (state, props) {
       const possibleValues = tableData.filter((rowItem)=>{return rowItem[field] === value})
@@ -78,22 +93,28 @@ export default class AppWrapper extends React.Component {
 
 
   render() {
+
+    var clusterData = this.groupBy(this.state.filteredData,'RIDAGEYR');
+    console.log(clusterData)
+     
     return (
 
-      <div style={{width: '90%',  margin:'auto', height:'1000px', 'overflow-y':'scroll'}}>
+      <div style={{width: '90%',  margin:'auto', height:'700px', 'overflow-y':'scroll'}}>
 
+      <Paper style={{margin: '16px 5px 16px 5px'}} zDepth={1}>
       <div style={{padding:'0px' , display:'inline-block', width:'30%'}}>
-       <Paper style={{margin: '16px 0px 16px 5px'}} zDepth={1}> 
-<TreeTableComponent title={'Tree'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}/>
-        </Paper> 
+        
+      <TreeTableComponent title={'Tree'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={this.state.height + 'px'}/>
+        
       </div>
       <div style={{padding:'0px' , display:'inline-block', width:'70%'}}>
-          <Paper style={{margin: '16px 5px 16px 5px'}} zDepth={1}> 
-        <TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={'700px'}>
+         
+        <TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={ this.state.height + 'px'}>
         <RadioButtonComponent/>
         </TableComponent>
-        </Paper> 
+     
      </div>
+        </Paper> 
       
       </div>
 

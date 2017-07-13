@@ -1,6 +1,8 @@
 import React from 'react';
 import * as d3 from 'd3';
 
+let margin = 10;
+
 export default class RenderColSummary extends React.Component {
 
 	constructor(props) {
@@ -17,7 +19,7 @@ export default class RenderColSummary extends React.Component {
 
     var max = d3.max(this.props.dataVector, (d)=>{return d[this.props.field] !== 'NA' ? d[this.props.field] : 0}) 
     var min = d3.min(this.props.dataVector, (d)=>{return d[this.props.field] !== 'NA' ? d[this.props.field] : 0}) 
-    var sizeScale = d3.scaleLinear().range([10 , 90]).domain([min,max]);
+    var sizeScale = d3.scaleLinear().range([margin,this.props.width-margin]).domain([min,max]);
 
     var refRange = null; 
     if (this.props.refs && this.props.refs[this.props.field]){
@@ -44,12 +46,12 @@ export default class RenderColSummary extends React.Component {
     var hist = this.state.histogram(this.props.dataVector,(d)=>{return d[this.props.field]});
 
     return (
-      <svg width={100} height={50} style={{display:'block', margin:'auto'}}>
+      <svg width={this.props.width} height={50} style={{display:'block', margin:'auto'}}>
         {hist.map((bin,i)=>{
-       return (<rect key={this.props.field + i} x={this.state.scale(bin.x0)} y={40 - this.state.histScale(bin.length)} width={6} height={this.state.histScale(bin.length)} fill={this.state.range && bin.x0>this.state.range[1] ? "indianred" : '#666666'} opacity='1'/>)
+       return (<rect key={this.props.field + i} x={this.state.scale(bin.x0)} y={40 - this.state.histScale(bin.length)} data-tooltip={'Value:' + bin.x0 + ' \n Patients:' + bin.length} width={this.props.width/20} height={this.state.histScale(bin.length)} fill={this.state.range && bin.x0>this.state.range[1] ? "indianred" : '#666666'} opacity='1'/>)
     })}
 
-        <rect x={0} y={40} width={100} height={2} fill='#cecece' opacity='1'/>
+        <rect x={0} y={40} width={this.props.width} height={2} fill='#cecece' opacity='1'/>
       </svg>
     )
   }
@@ -58,6 +60,7 @@ export default class RenderColSummary extends React.Component {
 
 // Specifies the default values for props:
 RenderColSummary.defaultProps = {
-  refs:null
+  refs:null,
+  width:100
 };
 

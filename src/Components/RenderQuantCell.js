@@ -32,19 +32,16 @@ export default class RenderQuantCell extends React.Component {
 
   render() {
 
-
     return (
      <svg width={this.props.width} height={this.props.height} style={{display:'block', margin:'auto', margin:'auto', 'margin-top':'5px', 'margin-bottom':'5px'}}>
-        
-
-      
       	<rect x={this.props.data !== 'NA' ? 0: this.props.width/3} y = {this.props.data !== 'NA' ? 0 : this.props.height/2 } width={this.props.data !== 'NA' ? this.props.width : this.props.width/3} height={this.props.data !== 'NA' ? this.props.height: this.props.height/5} fill={this.props.data !== 'NA' ? '#f4f4f4' : '#cccccc'}/>
        <rect x={this.state.range ? this.state.scale(this.state.range[1]) : 0 } width={this.state.range && this.props.data>this.state.range[1] ? this.state.scale.domain()[1]-this.state.scale(this.state.range[1]) : 0} height={this.props.height}  fill={this.props.highColor} opacity='.1'/>
         <rect x={0} width={this.state.range && this.props.data<this.state.range[0] ? this.state.scale(this.state.range[0]) : 0} height={this.props.height}  fill={this.props.lowColor} opacity='.1'/>
         {/*<rect x={this.state.range ? this.state.scale(this.state.range[0]) : 0 } width ={this.state.range ? 2 : 0} height={this.state.height}  fill='#969696' opacity='.5'/>
         <rect x={this.state.range ? this.state.scale(this.state.range[1]) : 0 } width ={this.state.range ? 2 : 0} height={this.state.height}  fill='#969696' opacity='.5'/>*/}
         <rect x={this.state.range ? this.state.scale(this.state.range[0]) : 0 } width={this.state.range? this.state.scale(this.state.range[1])-this.state.scale(this.state.range[0]) : 0} height={this.props.height}  fill='#969696' opacity='.2'/>
-      <circle cy={this.props.height/2} cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? this.props.height/4 : 0}  fill={this.state.range ? (this.props.data>this.state.range[1] ? this.props.highColor : (this.props.data<this.state.range[0] ? this.props.lowColor : '#8b8d8e')) : '#8b8d8e'}/>
+      
+      <circle cy={this.props.height/2} cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? this.props.height/6 : 0}  fill={this.state.range ? (this.props.data>this.state.range[1] ? this.props.highColor : (this.props.data<this.state.range[0] ? this.props.lowColor : '#8b8d8e')) : '#8b8d8e'}/>
          {/*<text x={0} y={25} fill='#8b8d8e'>{this.props.data}</text>*/}
       </svg>
     )
