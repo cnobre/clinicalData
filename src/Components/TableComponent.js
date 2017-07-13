@@ -6,7 +6,10 @@ import {grey500, blueGrey700} from 'material-ui/styles/colors';
 import SvgIcon from 'material-ui/SvgIcon';
 
 import RenderQuantCell from './RenderQuantCell'
+import RenderBooleanCell from './RenderBooleanCell'
 import RenderColSummary from './RenderColSummary'
+
+import Meter from './Meter'
 
 
 
@@ -36,6 +39,9 @@ const UpIcon = (props) => (
 const iconStyles = {
   marginRight: -7,
 };
+
+const twidth = 75
+const padding = '5px'
 
 export default class TableComponent extends React.Component {
 
@@ -73,8 +79,6 @@ export default class TableComponent extends React.Component {
 
     let tableData = this.props.data 
 
-  {/*.filter((el)=>{return typeof(tableData[0][el])!=='boolean'})*/};
-
     return (
 
       (tableData[0] != null) ? 
@@ -88,10 +92,10 @@ export default class TableComponent extends React.Component {
       selectable={this.state.selectable}
       multiSelectable={this.state.multiSelectable}
       bodyStyle={{'overflow-x':'scroll', 'overflow-y':'visible'}}
-      style={{tableLayout: 'auto'}} 
+      
       >
       {/*
-        
+      style={{tableLayout: 'auto'}} 
       onRowSelection={(selection)=>{this.setState({selectedRows: selection}); this.props.onRowSelect(selection)}} 
     */}  
       <TableHeader
@@ -125,7 +129,7 @@ export default class TableComponent extends React.Component {
       {Object.keys(tableData[0]).map((key)=> { 
         
         return (
-          <TableHeaderColumn tooltip={key} key={key} style={{height:'25px', width:'50px', padding:'10px', paddingLeft:'10px', textAlign:'center'}}>
+          <TableHeaderColumn tooltip={key} key={key} style={{height:'10px', width:twidth, padding:padding, paddingLeft:padding, textAlign:'center', overflow:'hidden'}}>
            {key}
            {/*<span>
            <br/> <DownIcon style={iconStyles} color={grey500} hoverColor={blueGrey700} onClick={()=>{this.handleSort('down',key)}}/>
@@ -142,8 +146,8 @@ export default class TableComponent extends React.Component {
          <TableRow>
       {Object.keys(tableData[0]).map((key)=> { 
         return (
-         <TableHeaderColumn  key={key} style={{paddingRight:'10px', width:'50px', paddingLeft:'10px'}}>
-              <RenderColSummary dataVector={tableData} field={key} refs={this.props.refs}/></TableHeaderColumn>
+         <TableHeaderColumn  key={key} style={{paddingRight:padding, width:twidth, paddingLeft:padding}}>
+              <RenderColSummary dataVector={tableData} field={key} refs={this.props.refs} width={twidth}/></TableHeaderColumn>
           )
         
         })}
@@ -158,10 +162,26 @@ export default class TableComponent extends React.Component {
           {Object.keys(row).map((key)=> { 
       
             return (                 
-            <TableRowColumn  key={key} style={{paddingRight:'10px', width:'50px', paddingLeft:'10px'}}>
-              <RenderQuantCell dataVector={tableData} field={key} data={row[key]} refs={this.props.refs}/>
+            <TableRowColumn  key={key} style={{paddingRight:padding, width:{twidth}, paddingLeft:padding}}>
+            
+            {
+              (typeof(row[key]) === 'number') && 
+               <Meter width={twidth} label={row[key]}/>
+                
+            }
+             {/* 
+             {
+              (typeof(row[key]) === 'boolean' || row[key] === 'Y' || row[key] === 'N') && 
+                <RenderBooleanCell dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
+            }
 
-              </TableRowColumn>
+            {
+              (typeof(row[key]) === 'string' && row[key] !== 'Y' && row[key] !== 'N') && 
+                <RenderQuantCell dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>   
+            }
+
+              */}
+            </TableRowColumn>
           
             )
 

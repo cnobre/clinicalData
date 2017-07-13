@@ -18,6 +18,10 @@
   </head>
   <body>
 
+    <div class='tooltip' id="tooltip" >
+     <span class="tooltiptext" id="tooltiptext">Tooltip text</span>
+    </div>
+
     <div id="root"></div>
 
 
@@ -31,6 +35,37 @@
       To begin the development, run `npm start`.
       To create a production bundle, use `npm run build`.
     -->
+
+    <script>
+document.addEventListener("mousemove", function(event){
+    // document.getElementById("tooltip").innerHTML = event.target.attributes.getNamedItem('data-tooltip');
+    // console.log(event); 
+    // console.log(event.target.attributes); 
+    // console.log(event.target.attributes.getNamedItem('data-tooltip')); //
+
+    // .nearestViewportElement.attributes.getNamedItem('data-tooltip'))
+
+    const div = document.getElementById('tooltip');
+    const label = event.target.attributes.getNamedItem('data-tooltip'); 
+
+    // console.log(label.value)
+
+    if (label){
+      div.style.visibility = 'visible';
+      document.getElementById('tooltiptext').innerHTML = label.value;
+      
+      const left  = event.clientX  + "px";
+      const top  = event.clientY-30  + "px";
+
+      div.style.left = left;
+      div.style.top = top;
+    } else {
+
+      div.style.visibility = 'hidden';
+    }
+});
+</script>
+
   </body>
 
 </html>
