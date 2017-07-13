@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+#root{
+	cursor: default; 
+}
+
 /* Tooltip container */
 .tooltip {
     position: relative;
@@ -15,6 +19,8 @@ body {
 .tooltip .tooltiptext {
     /*visibility: hidden;*/
     /*width: 120px;*/
+    max-width: 300px;
+    min-width: 100px;
     background-color: rgba(71, 104, 132, 0.73);
     color: #fff;
     text-align: center;

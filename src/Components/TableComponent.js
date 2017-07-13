@@ -110,12 +110,6 @@ export default class TableComponent extends React.Component {
 
       </TableRow>
 
-      <TableRow>
-             <TableHeaderColumn colSpan={Object.keys(tableData[0]).length} style={{textAlign: 'center'}} >
-      {this.props.children}
-       </TableHeaderColumn>
-
-      </TableRow>
 
       </TableHeader>
         <TableBody
@@ -129,7 +123,7 @@ export default class TableComponent extends React.Component {
       {Object.keys(tableData[0]).map((key)=> { 
         
         return (
-          <TableHeaderColumn tooltip={key} key={key} style={{height:'10px', width:twidth, padding:padding, paddingLeft:padding, textAlign:'center', overflow:'hidden'}}>
+          <TableHeaderColumn data-tooltip={key} tooltip={key} key={key} style={{height:'10px', width:twidth, padding:padding, paddingLeft:padding, textAlign:'center', overflow:'hidden'}}>
            {key}
            {/*<span>
            <br/> <DownIcon style={iconStyles} color={grey500} hoverColor={blueGrey700} onClick={()=>{this.handleSort('down',key)}}/>
@@ -166,7 +160,8 @@ export default class TableComponent extends React.Component {
             
             {
               (typeof(row[key]) === 'number') && 
-               <Meter width={twidth} label={row[key]}/>
+            <RenderQuantCell label={row[key]} percent={row[key]} dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
+              
                 
             }
              {/* 

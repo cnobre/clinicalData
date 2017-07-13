@@ -20,9 +20,6 @@ import RadioButtonComponent from './RadioButtonComponent'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-
-
-
 {/*
 import ToolbarComponent from './ToolbarComponent';
 import TabComponent from './TabComponent';
@@ -96,21 +93,17 @@ export default class AppWrapper extends React.Component {
 
     var clusterData = this.groupBy(this.state.filteredData,'RIDAGEYR');
     console.log(clusterData)
-     
+
     return (
 
       <div style={{width: '90%',  margin:'auto', height:'700px', 'overflow-y':'scroll'}}>
 
       <Paper style={{margin: '16px 5px 16px 5px'}} zDepth={1}>
-      <div style={{padding:'0px' , display:'inline-block', width:'30%'}}>
-        
-      <TreeTableComponent title={'Tree'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={this.state.height + 'px'}/>
-        
-      </div>
-      <div style={{padding:'0px' , display:'inline-block', width:'70%'}}>
+
+      <div style={{padding:'0px' , display:'inline-block', width:'100%'}}>
          
         <TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={ this.state.height + 'px'}>
-        <RadioButtonComponent/>
+        
         </TableComponent>
      
      </div>

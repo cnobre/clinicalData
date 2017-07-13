@@ -48,6 +48,7 @@ export default class RenderColSummary extends React.Component {
     return (
       <svg width={this.props.width} height={50} style={{display:'block', margin:'auto'}}>
         {hist.map((bin,i)=>{
+          console.log(bin)
        return (<rect key={this.props.field + i} x={this.state.scale(bin.x0)} y={40 - this.state.histScale(bin.length)} data-tooltip={'Value:' + bin.x0 + ' \n Patients:' + bin.length} width={this.props.width/20} height={this.state.histScale(bin.length)} fill={this.state.range && bin.x0>this.state.range[1] ? "indianred" : '#666666'} opacity='1'/>)
     })}
 

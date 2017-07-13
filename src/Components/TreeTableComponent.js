@@ -104,12 +104,6 @@ export default class TreeTableComponent extends React.Component {
 
       </TableRow>
 
-      <TableRow>
-             <TableHeaderColumn colSpan={Object.keys(tableData[0]).length} style={{textAlign: 'center'}} >
-      {this.props.children}
-       </TableHeaderColumn>
-
-      </TableRow>
 
       </TableHeader>
         <TableBody

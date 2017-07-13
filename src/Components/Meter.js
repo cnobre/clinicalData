@@ -3,7 +3,7 @@ import React from 'react';
 
 var Meter = function (props) {
   var {
-    percent = Math.random(),         // a number between 0 and 1, inclusive
+    percent = 0,         // a number between 0 and 1, inclusive
     width = 65,         // the overall width
     height = 20,         // the overall height
     rounded = true,      // if true, use rounded corners
