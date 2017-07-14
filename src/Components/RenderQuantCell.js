@@ -12,6 +12,7 @@ export default class RenderQuantCell extends React.Component {
         min:null,
         scale: null,
         range:null,
+        quantiles:null,
     }
 
   }
@@ -28,8 +29,15 @@ export default class RenderQuantCell extends React.Component {
     	 refRange = JSON.parse("[" + this.props.refs[this.props.field] + "]")[0];
     	 sizeScale.domain([d3.min([min,refRange[0]*.8]), d3.max([max,refRange[1]*1.5])])
     }
+
+    let values = this.props.dataVector.map((obj)=>{return +obj[this.props.field]}).sort((a,b)=>{return a-b});
+    let quantiles = [
+      d3.quantile(values, .25),
+      d3.quantile(values, .5),
+      d3.quantile(values, .75)
+    ];
     
-    this.setState({scale:sizeScale, range:refRange, max:max, min:min});
+    this.setState({quantiles:quantiles, scale:sizeScale, range:refRange, max:max, min:min});
   }
 
 
@@ -38,8 +46,8 @@ export default class RenderQuantCell extends React.Component {
      var {
     percent = 0,         // a number between 0 and 1, inclusive
     width = 65,         // the overall width
-    height = 20,         // the overall height
-    rounded = true,      // if true, use rounded corners
+    height = 5,         // the overall height
+    rounded = false,      // if true, use rounded corners
     color = "#0078bc",   // the fill color
     animate = false,     // if true, animate when the percent changes
     label = null         // a label to describe the contents (for accessibility)
@@ -48,11 +56,15 @@ export default class RenderQuantCell extends React.Component {
   var r = rounded ? Math.ceil(height / 2) : 0;
   var w = percent ? Math.max(height, width * Math.min(percent/this.state.max, 1)): 0;
   var style = animate ? { "transition": "width 500ms, fill 250ms" } : null;
-
+ 
   return (
     <svg width={width} height={height} aria-label={label} >
-      <rect width={width} height={height} fill="#ccc" rx={r} ry={r} data-tooltip={label}/>
-      <rect width={w} height={height} fill={color} rx={r} ry={r} style={style} data-tooltip={label}/>
+      <rect width={width} height={height} fill="#ccc" rx={0} ry={0} data-tooltip={label}/>
+      <rect x={this.state.scale(this.state.quantiles[0])} y={height/2-3} width={this.state.scale(this.state.quantiles[2]) - this.state.scale(this.state.quantiles[0])} height={6} fill="rgba(45, 45, 45, 0.44)" rx={5} ry={5} data-tooltip={label}/>
+      <rect x={this.state.scale(this.state.quantiles[1])} y={height/2-3} width={3} height={6} fill="#ccc"  data-tooltip={label}/>
+
+      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/5 : 0} cy={height/2} fill='#545454' data-tooltip={label}/>
+
     </svg>
   );
 
@@ -71,7 +83,7 @@ RenderQuantCell.defaultProps={
        refs : null,
       highColor : '#bc3a20',
     lowColor : '#3b6799',
-    height : 30,
+    height : 15,
     width : 100,
   refs:null,
     highColor:'#bc3a20',

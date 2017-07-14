@@ -46,9 +46,8 @@ export default class RenderColSummary extends React.Component {
     var hist = this.state.histogram(this.props.dataVector,(d)=>{return d[this.props.field]});
 
     return (
-      <svg width={this.props.width} height={50} style={{display:'block', margin:'auto'}}>
+      <svg width={this.props.width} height={50} style={{display:'block', margin:'10 0 0 0 '}}>
         {hist.map((bin,i)=>{
-          console.log(bin)
        return (<rect key={this.props.field + i} x={this.state.scale(bin.x0)} y={40 - this.state.histScale(bin.length)} data-tooltip={'Value:' + bin.x0 + ' \n Patients:' + bin.length} width={this.props.width/20} height={this.state.histScale(bin.length)} fill={this.state.range && bin.x0>this.state.range[1] ? "indianred" : '#666666'} opacity='1'/>)
     })}
 

@@ -91,7 +91,7 @@ export default class TableComponent extends React.Component {
       
       selectable={this.state.selectable}
       multiSelectable={this.state.multiSelectable}
-      bodyStyle={{'overflow-x':'scroll', 'overflow-y':'visible'}}
+      bodyStyle={{'overflowX':'scroll', 'overflowY':'visible'}}
       
       >
       {/*
@@ -119,7 +119,7 @@ export default class TableComponent extends React.Component {
         stripedRows={this.state.stripedRows}
         preScanRows={this.state.preScanRows}
         >
-        <TableRow style={{'border-bottom':'0px'}}>
+        <TableRow style={{'borderBottom':'0px'}}>
       {Object.keys(tableData[0]).map((key)=> { 
         
         return (
@@ -160,7 +160,7 @@ export default class TableComponent extends React.Component {
             
             {
               (typeof(row[key]) === 'number') && 
-            <RenderQuantCell label={row[key]} percent={row[key]} dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
+            <RenderQuantCell label={'Value: ' + row[key]} percent={row[key]} dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
               
                 
             }

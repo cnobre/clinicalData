@@ -5,6 +5,9 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import AutoCompleteComponent from './AutoCompleteComponent';
 
+
+import AttributeMenu from './AttributeMenu'
+
 import MenuComponent from './MenuComponent'
 
 import tableData from '../Data/SampleNhanes.json';
@@ -52,7 +55,7 @@ export default class AppWrapper extends React.Component {
       city:'',
       category:'',
       selectedCompany:null,
-      height:filtData.length * 60 + 100
+      height:filtData.length * 55 + 0
     }; 
   }
 
@@ -92,15 +95,17 @@ export default class AppWrapper extends React.Component {
   render() {
 
     var clusterData = this.groupBy(this.state.filteredData,'RIDAGEYR');
-    console.log(clusterData)
+  
 
     return (
 
-      <div style={{width: '90%',  margin:'auto', height:'700px', 'overflow-y':'scroll'}}>
+      <div style={{width: '90%',  margin:'auto', height:'1200px', 'overflowY':'scroll'}}>
 
       <Paper style={{margin: '16px 5px 16px 5px'}} zDepth={1}>
 
       <div style={{padding:'0px' , display:'inline-block', width:'100%'}}>
+
+      <AttributeMenu attributes={this.state.filteredData[0]} allData = {this.state.filteredData}/>
          
         <TableComponent title={'Clinical Data'} data={this.state.filteredData} onRowSelect={this.handleTableSelection} refs={refs} height={ this.state.height + 'px'}>
         
