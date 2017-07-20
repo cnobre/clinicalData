@@ -58,6 +58,7 @@ export default class RenderQuantCell extends React.Component {
         scale: null,
         range:null,
         quantiles:null,
+        gradientScale:null,
     }
 
   }
@@ -81,8 +82,23 @@ export default class RenderQuantCell extends React.Component {
       d3.quantile(values, .5),
       d3.quantile(values, .75)
     ];
+
+    let thresh = d3.thresholdSturges(this.props.dataVector.map(d=>{return d[this.props.field]}))
+
+    var histogram = d3.histogram()
+    .value((d)=>{ return d[this.props.field]})
+    .domain(sizeScale.domain())
+    .thresholds(sizeScale.ticks(10))
+
     
-    this.setState({quantiles:quantiles, scale:sizeScale, range:refRange, max:max, min:min});
+    var minCount = d3.min(histogram(this.props.dataVector).map((bin)=>{return bin.length}));
+    var maxCount = d3.max(histogram(this.props.dataVector).map((bin)=>{return bin.length}));
+
+    var histScale = d3.scaleLinear().range([0,40]).domain([minCount,maxCount]);
+    var gradientScale = histogram(this.props.dataVector).map((bin)=>{return bin.length});
+
+
+    this.setState({quantiles:quantiles, scale:sizeScale, range:refRange, max:max, min:min, gradientScale:gradientScale});
   }
 
 
@@ -102,12 +118,24 @@ export default class RenderQuantCell extends React.Component {
   var w = percent ? Math.max(height, width * Math.min(percent/this.state.max, 1)): 0;
   var style = animate ? { "transition": "width 500ms, fill 250ms" } : null;
  
+  let id = "linear_" + this.props.field.replace(/\s/g, '').replace(/\\\//g, '').replace(/\//g, '').replace('(', '').replace(')', '');
   return (
     <svg width={width} height={height} aria-label={label} >
-      <rect width={width} height={height} fill="#e2e0e0" rx={height/2} ry={height/2} data-tooltip={label}/>
-      <RangeRef scale={this.state.scale} refs={this.state.range} height={height}/>
-      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/2.3 : 0} cy={height/2} fill={(this.state.range && this.props.data>this.state.range[1]) ? 'rgba(193, 66, 66, 0.7)' : 'rgba(8, 6, 6, 0.5)'} data-tooltip={label}/>
+    <defs>
+      <linearGradient id={id}>
+        {
+          this.state.gradientScale.map((bin,i)=>{
+            return <stop offset={Math.round(i/this.state.gradientScale.length*100) +"%"}   stopColor={'rgba(92, 141, 117,' + (bin/d3.max(this.state.gradientScale)) + ')'}/>
+          })
+        }
+      </linearGradient>
+    </defs>
 
+
+      <rect width={width} height={height} fill={'url(#' + id + ')'} stroke='#b2b2b2' strokeWidth={1} rx={height/2} ry={height/2} data-tooltip={label}/>
+      {/*<RangeRef scale={this.state.scale} refs={this.state.range} height={height}/>
+      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/2.3 : 0} cy={height/2} fill={(this.state.range && this.props.data>this.state.range[1]) ? 'rgba(193, 66, 66, 0.7)' : 'rgba(8, 6, 6, 0.5)'} data-tooltip={label}/>
+*/}
     </svg>
   );
 

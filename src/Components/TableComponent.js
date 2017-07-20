@@ -84,6 +84,13 @@ export default class TableComponent extends React.Component {
       (tableData[0] != null) ? 
       <div style={{width: '100%',margin: 'auto'}}>
 
+         <linearGradient id="linear-gradient">
+      <stop offset="14%" stopColor="#2f343b" stopOpacity="0%"/>
+      <stop offset="43%" stopColor="#337082" stopOpacity="41%"/>
+      <stop offset="67%" stopColor="#369fb9" stopOpacity="73%"/>
+      <stop offset="79%" stopColor="#37b1cf" stopOpacity="85%"/>        
+      </linearGradient>
+
       <Table
       height={this.state.height}
       fixedHeader={this.state.fixedHeader}
@@ -123,6 +130,7 @@ export default class TableComponent extends React.Component {
       {Object.keys(tableData[0]).map((key)=> { 
         
         return (
+
           <TableHeaderColumn data-tooltip={key} tooltip={key} key={key} style={{height:'10px', width:twidth, padding:padding, paddingLeft:padding, textAlign:'center', overflow:'hidden'}}>
            {key}
            {/*<span>

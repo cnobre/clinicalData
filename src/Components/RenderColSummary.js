@@ -30,7 +30,7 @@ export default class RenderColSummary extends React.Component {
     var histogram = d3.histogram()
     .value((d)=>{ return d[this.props.field]})
     .domain(sizeScale.domain())
-    .thresholds(10)
+    .thresholds(sizeScale.ticks(10))
 
     var minCount = d3.min(histogram(this.props.dataVector).map((bin)=>{return bin.length}));
     var maxCount = d3.max(histogram(this.props.dataVector).map((bin)=>{return bin.length}));

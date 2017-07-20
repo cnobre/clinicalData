@@ -95,11 +95,17 @@ export default class AppWrapper extends React.Component {
   render() {
 
     var clusterData = this.groupBy(this.state.filteredData,'RIDAGEYR');
-    console.log(this.state.filteredData[0])
 
     return (
 
       <div style={{width: '90%',  margin:'auto', height:'1200px', 'overflowY':'scroll'}}>
+
+         <linearGradient id="linear-gradient">
+      <stop offset="14%" stopColor="#2f343b" stopOpacity="0%"/>
+      <stop offset="43%" stopColor="#337082" stopOpacity="41%"/>
+      <stop offset="67%" stopColor="#369fb9" stopOpacity="73%"/>
+      <stop offset="79%" stopColor="#37b1cf" stopOpacity="85%"/>        
+      </linearGradient>
 
       <Paper style={{margin: '16px 5px 16px 5px'}} zDepth={1}>
 
