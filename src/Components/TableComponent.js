@@ -152,22 +152,23 @@ export default class TableComponent extends React.Component {
 
 
         {tableData.map( (row, index) => (
-          <TableRow key={index} selected={this.state.selectedRows.indexOf(index) !== -1}>
+          <tr key={index} style={{borderBottom:'0px solid rgb(224, 224, 224)', color:'rgba(0, 0, 0, 0.87)', height:30}} >
+
           {Object.keys(row).map((key)=> { 
       
             return (                 
-            <TableRowColumn  key={key} style={{paddingRight:padding, width:{twidth}, paddingLeft:padding}}>
+            <td  key={key} style={{paddingRight:padding, width:{twidth}, height:20, paddingLeft:padding}}>
 
              <RenderQuantCell label={'Value: ' + row[key]} percent={row[key]} dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
            
           
-            </TableRowColumn>
+            </td>
           
             )
 
           })}
 
-            </TableRow>
+            </tr>
             ))}
             </TableBody>
 

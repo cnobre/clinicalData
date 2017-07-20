@@ -6,17 +6,17 @@ var margin = 10;
 
 function RangeRef (props) {
 
-  var barHeight = props.height*.4
-  var height = 0
+  var barHeight = props.height
+  var height = props.height/2
   if (!props.refs){
     return null
   }
 
   return (  
     <svg>
-      <line x1={0} x2={props.scale(props.refs[0])} y1={height} y2={height} style={{stroke:'#8fc6e0', strokeWidth:barHeight}}/>
+      {/*<line x1={3} x2={props.scale(props.refs[0])} y1={height} y2={height} style={{stroke:'#8fc6e0', strokeWidth:barHeight, strokeLinecap:"round"}}/>
+      <line  x1={props.scale(props.refs[1])}  x2={props.scale.range()[1]+7} y1={height} y2={height} style={{stroke:'#e09c8f', strokeWidth:barHeight, strokeLinecap:"round"}}/>*/}
       <line x1={props.scale(props.refs[0])} x2={props.scale(props.refs[1])} y1={height} y2={height} style={{stroke:'#bcbcbc', strokeWidth:barHeight}}/>
-      <line  x1={props.scale(props.refs[1])}  x2={props.scale.range()[1]+30} y1={height} y2={height} style={{stroke:'#e09c8f', strokeWidth:barHeight}}/>
     </svg>
   )
 }
@@ -104,9 +104,9 @@ export default class RenderQuantCell extends React.Component {
  
   return (
     <svg width={width} height={height} aria-label={label} >
-      <rect width={width} height={height} fill="#e2e0e0" rx={0} ry={0} data-tooltip={label}/>
+      <rect width={width} height={height} fill="#e2e0e0" rx={height/2} ry={height/2} data-tooltip={label}/>
       <RangeRef scale={this.state.scale} refs={this.state.range} height={height}/>
-      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/5 : 0} cy={height/2} fill={(this.state.range && this.props.data>this.state.range[1]) ? '#c42e29' : '#545454'} data-tooltip={label}/>
+      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/2.3 : 0} cy={height/2} fill={(this.state.range && this.props.data>this.state.range[1]) ? 'rgba(193, 66, 66, 0.7)' : 'rgba(8, 6, 6, 0.5)'} data-tooltip={label}/>
 
     </svg>
   );
@@ -124,13 +124,8 @@ RenderQuantCell.defaultProps={
       animate : false,     // if true, animate when the percent changes
       label :null,        // a label to describe the contents (for accessibility)
        refs : null,
-      highColor : '#bc3a20',
-    lowColor : '#3b6799',
-    height : 15,
-    width : 100,
-  refs:null,
     highColor:'#bc3a20',
   lowColor:'#3b6799',
-  height:30,
+  height:15,
   width:100
 };
