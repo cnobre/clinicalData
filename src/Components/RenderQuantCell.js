@@ -1,7 +1,52 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import * as d3 from 'd3';
 
 var margin = 10;
+
+function RangeRef (props) {
+
+  var barHeight = props.height*.4
+  var height = 0
+  if (!props.refs){
+    return null
+  }
+
+  return (  
+    <svg>
+      <line x1={0} x2={props.scale(props.refs[0])} y1={height} y2={height} style={{stroke:'#8fc6e0', strokeWidth:barHeight}}/>
+      <line x1={props.scale(props.refs[0])} x2={props.scale(props.refs[1])} y1={height} y2={height} style={{stroke:'#bcbcbc', strokeWidth:barHeight}}/>
+      <line  x1={props.scale(props.refs[1])}  x2={props.scale.range()[1]+30} y1={height} y2={height} style={{stroke:'#e09c8f', strokeWidth:barHeight}}/>
+    </svg>
+  )
+}
+
+function BoxPlot (props) {
+
+  if(!props.x1 || !props.x2 || !props.x3 || !props.x4 || !props.x5){
+    return null
+  }
+  return (
+    <svg>
+      <line x1={props.x1} x2={props.x5} y1={props.height/2} y2={props.height/2} style={{stroke:'#7f7f7f', strokeDasharray:"3"}}/>
+      <line x1={props.x1} x2={props.x1} y1={props.height/2-2} y2={props.height/2+2} style={{stroke:'#7f7f7f'}}/>
+      <line x1={props.x5} x2={props.x5} y1={props.height/2-2} y2={props.height/2+2} style={{stroke:'#7f7f7f'}}/>
+
+      <rect x={props.x2} y={props.height/2-props.height*0.5/2} width={props.x4 - props.x2} height={props.height*0.5} fill="#a8a8a8" rx={0} ry={0} data-tooltip={props.label}/>
+      <rect x={props.x3} y={props.height/2-props.height*0.5/2} width={3} height={props.height*0.5} fill="#e2e0e0"  data-tooltip={props.label}/>
+      </svg>
+  )
+}
+
+BoxPlot.defaultProps = {
+  x1:0,
+  x2:30,
+  x3:60,
+  x4:90,
+  x5:100,
+  height:100
+};
+
 
 export default class RenderQuantCell extends React.Component {
 
@@ -59,11 +104,9 @@ export default class RenderQuantCell extends React.Component {
  
   return (
     <svg width={width} height={height} aria-label={label} >
-      <rect width={width} height={height} fill="#ccc" rx={0} ry={0} data-tooltip={label}/>
-      <rect x={this.state.scale(this.state.quantiles[0])} y={height/2-3} width={this.state.scale(this.state.quantiles[2]) - this.state.scale(this.state.quantiles[0])} height={6} fill="rgba(45, 45, 45, 0.44)" rx={5} ry={5} data-tooltip={label}/>
-      <rect x={this.state.scale(this.state.quantiles[1])} y={height/2-3} width={3} height={6} fill="#ccc"  data-tooltip={label}/>
-
-      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/5 : 0} cy={height/2} fill='#545454' data-tooltip={label}/>
+      <rect width={width} height={height} fill="#e2e0e0" rx={0} ry={0} data-tooltip={label}/>
+      <RangeRef scale={this.state.scale} refs={this.state.range} height={height}/>
+      <circle cx={this.state.scale(this.props.data) ? this.state.scale(this.props.data) : 0 } r={this.props.data !== 'NA' ? height/5 : 0} cy={height/2} fill={(this.state.range && this.props.data>this.state.range[1]) ? '#c42e29' : '#545454'} data-tooltip={label}/>
 
     </svg>
   );

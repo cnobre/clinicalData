@@ -9,9 +9,9 @@ import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 
+import AutoComplete from 'material-ui/AutoComplete';
 
 import RenderColSummary from './RenderColSummary'
-
 
 import Checkbox from 'material-ui/Checkbox';
 import Toggle from 'material-ui/Toggle';
@@ -75,13 +75,21 @@ export default class attributeMenu extends React.Component {
         >
 
        
-      <div style={{width:1800, height:190, margin:0}}>
+      <div style={{width:1800, height:'100%', margin:0}}>
+
+      <div style={{margin:20}}>
+        <AutoComplete
+        floatingLabelText="Search for Attributes"
+        filter={AutoComplete.caseInsensitiveFilter}
+        dataSource={Object.keys(this.props.attributes)}/>
+      </div>
+
           <List style={flexContainer}>
 
          {Object.keys(this.props.attributes).sort().map((key)=> { 
         
         return (
-           <Paper style={{width:180, height:150, margin:20}} zDepth={1} key={'p' + key}>
+           <Paper style={{width:180, height:150, margin:12, backgroundColor:'rgba(84, 84, 84, 0.1)'}} zDepth={1} key={'p' + key}>
           <ListItem rightToggle={<Toggle />} key={'list' + key} primaryText={key} 
           secondaryText={<RenderColSummary dataVector={this.props.allData} field={key}  width={75}/>}/>
           </Paper>

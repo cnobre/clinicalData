@@ -95,7 +95,7 @@ export default class AppWrapper extends React.Component {
   render() {
 
     var clusterData = this.groupBy(this.state.filteredData,'RIDAGEYR');
-  
+    console.log(this.state.filteredData[0])
 
     return (
 

@@ -157,25 +157,10 @@ export default class TableComponent extends React.Component {
       
             return (                 
             <TableRowColumn  key={key} style={{paddingRight:padding, width:{twidth}, paddingLeft:padding}}>
-            
-            {
-              (typeof(row[key]) === 'number') && 
-            <RenderQuantCell label={'Value: ' + row[key]} percent={row[key]} dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
-              
-                
-            }
-             {/* 
-             {
-              (typeof(row[key]) === 'boolean' || row[key] === 'Y' || row[key] === 'N') && 
-                <RenderBooleanCell dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
-            }
 
-            {
-              (typeof(row[key]) === 'string' && row[key] !== 'Y' && row[key] !== 'N') && 
-                <RenderQuantCell dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>   
-            }
-
-              */}
+             <RenderQuantCell label={'Value: ' + row[key]} percent={row[key]} dataVector={tableData} field={key} data={row[key]} refs={this.props.refs} width={twidth}/>
+           
+          
             </TableRowColumn>
           
             )
